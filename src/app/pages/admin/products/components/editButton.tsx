@@ -16,38 +16,23 @@ import {
 import { useMutation } from "@tanstack/react-query"
 import axiosInstance from "@/app/utils/axios"
 import { ImageIcon , X} from "lucide-react"
-import { errorAlert, successAlert } from "@/app/utils/alert";
+import { confirmAlert, errorAlert, successAlert } from "@/app/utils/alert";
 import { productInterface, productInterfaceInput, productVariantInterface } from "@/app/types/product.type"
-import { generateNumericBarcode } from "@/app/utils/customFunction"
 import { Label } from "@/components/ui/label"
 
-export function AddButton({ setProduct } : { setProduct : React.Dispatch<React.SetStateAction<productInterface[]>>}) {
+export function EditButton({ setProduct, product } : { product : productInterface, setProduct : React.Dispatch<React.SetStateAction<productInterface[]>>}) {
   const [open, setOpen] = useState(false)
-  const [file, setFile] = useState<File | null>(null)
-  const [productName, setProductName] = useState("")
-  
-  const [productVariants, setProductVariants] = useState<productVariantInterface[]>([
-    {
-      variant : "",
-      price : 0,
-      stocks : 0,
-      barcode : generateNumericBarcode(),
-    }
-  ])
+  const [productName, setProductName] = useState(product.name)
+  const [productVariants, setProductVariants] = useState<productVariantInterface[]>(product.variants)
 
-
-  const [imagePreview, setImagePreview] = useState<string | null>(null)
 
 
   const mutation = useMutation({
-    mutationFn: (formData: FormData) =>
-      axiosInstance.post("/product", formData, { headers: { "Content-Type": "multipart/form-data" } }),
+    mutationFn: (data: productInterface) =>
+      axiosInstance.put(`/product/${data._id}`, data),
     onSuccess: (response) => {
-      successAlert("product added")
+      successAlert("save changes")
       setProduct(response.data)
-      setProductName("")
-      setFile(null)
-      setImagePreview(null)
       setOpen(false)
     },
     onError: (err) => {
@@ -55,42 +40,26 @@ export function AddButton({ setProduct } : { setProduct : React.Dispatch<React.S
     },
   })
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const selectedFile = e.target.files[0];
-      setFile(selectedFile);
-  
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setImagePreview(event.target?.result as string);
-      };
-      reader.readAsDataURL(selectedFile);
-    } else {
-  
-      setFile(null);
-      setImagePreview(null);
-    }
-  };
 
 
 
   const handleSubmit = async () => {
-    if (!file || !productName) return errorAlert("empty input field")
-
-    const formData = new FormData()
-
-    formData.append("file", file)
-    formData.append("name", productName)
-    formData.append("variants", JSON.stringify(productVariants))
-
-    mutation.mutate(formData)
+    if (!productName) return errorAlert("empty input field")
+    mutation.mutate({
+        _id : product._id,
+        name : productName,
+        variants : productVariants,
+        image : product.image
+    })
   }
 
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger onClick={() => setOpen(true)} asChild>
-        <Button >Add Product</Button>
+            <Button className=" absolute w-full h-full top-0 left-0 opacity-0 "  onClick={() => setOpen(true)}>
+                    
+            </Button>
       </SheetTrigger>
   
       <SheetContent className="sm:max-w-md">
@@ -103,7 +72,6 @@ export function AddButton({ setProduct } : { setProduct : React.Dispatch<React.S
   
         <div className="rounded-lg bg-white mx-auto max-h-[500px] overflow-auto p-6 space-y-6 border h-[500px]">
           {/* Product Name */}
-          
           <div className="space-y-1">
             <label htmlFor="product-name" className="text-sm font-medium text-gray-700">
               Product Name
@@ -117,36 +85,7 @@ export function AddButton({ setProduct } : { setProduct : React.Dispatch<React.S
             />
           </div>
 
-          {/* Image Upload */}
-          <div className="w-full flex flex-col sm:flex-row gap-4">
-            {/* Upload */}
-            <div className="flex-1 space-y-1">
-              <label htmlFor="product-image" className="text-sm font-medium text-gray-700">
-                Product Image
-              </label>
-              <input
-                id="product-image"
-                type="file"
-                onChange={handleFileChange}
-                className="w-full file:px-3 file:py-1.5 file:rounded file:border file:bg-gray-100 file:text-gray-700 file:cursor-pointer"
-                accept="image/*"
-              />
-            </div>
-
-            {/* Preview */}
-            <div className="w-full sm:w-24 flex-shrink-0">
-              <p className="text-sm font-medium text-gray-700 mb-1">Image Preview</p>
-              {imagePreview ? (
-                <div className="w-24 h-24 border-2 border-dashed rounded-lg overflow-hidden">
-                  <img src={imagePreview} alt="Preview" className="object-cover w-full h-full" />
-                </div>
-              ) : (
-                <div className="flex items-center justify-center w-24 h-24 border-2 border-dashed rounded-lg text-gray-400 bg-gray-50">
-                  <ImageIcon className="h-12 w-12" />
-                </div>
-              )}
-            </div>
-          </div>
+         
 
           {/* Product Variants */}
           <div className="space-y-4">
@@ -159,7 +98,7 @@ export function AddButton({ setProduct } : { setProduct : React.Dispatch<React.S
                 onClick={() =>
                   setProductVariants([
                     ...productVariants,
-                    { variant: "", price: 0, stocks: 0, barcode: generateNumericBarcode() },
+                    { variant: "", price: 0, stocks: 0, barcode: "123" },
                   ])
                 }
               >
@@ -246,7 +185,7 @@ export function AddButton({ setProduct } : { setProduct : React.Dispatch<React.S
             disabled={mutation.isPending}
             className="w-full"
           >
-            {mutation.isPending ? "Saving..." : "Save Menu"}
+            {mutation.isPending ? "Saving..." : "Save Changes"}
           </Button>
         </SheetFooter>
       </SheetContent>

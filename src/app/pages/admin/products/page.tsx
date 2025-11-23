@@ -8,6 +8,9 @@ import { Button } from "@/components/ui/button";
 import axiosInstance from "@/app/utils/axios";
 import { AddButton } from "./components/addButton";
 import { productInterface } from "@/app/types/product.type";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import { EditButton } from "./components/editButton";
 
 export default function Page() {
     
@@ -28,7 +31,7 @@ export default function Page() {
       
               {/* Header with Add Button */}
               <div className="w-full h-1/6 bg-white border-b shadow-sm flex items-center justify-between px-6">
-                <h1 className="text-2xl font-bold text-gray-800">Food Menu</h1>
+                <h1 className="text-2xl font-bold text-gray-800">Products</h1>
                 <AddButton setProduct={setProduct} />
               </div>
       
@@ -64,12 +67,42 @@ export default function Page() {
       
                       {/* Content */}
                       <div className="p-4 space-y-1">
-                        <h3 className="font-semibold text-lg text-gray-900 truncate">
+                        <h3 className="font-bold text-2xl text-gray-900 truncate mb-2">
                           {item.name}
                         </h3>
-                        <p className="text-sm text-gray-500">₱ {item.variants[0].price}</p>
 
-                        {/*<EditButton menu={item} setMenu={setMenu} /> */}
+                        <div>
+                          {/* Header */}
+                          <div className="grid grid-cols-3 gap-4 mb-2">
+                            <Label className="font-bold">Variants:</Label>
+                            <Label className="font-bold">Price:</Label>
+                            <Label className="font-bold">Stocks:</Label>
+                          </div>
+
+                          {/* Variants List */}
+                          {item.variants.map((variant, index) => (
+                            <div key={index} className="grid grid-cols-3 gap-4 mb-2">
+                              <Label className="text-stone-500">{variant.variant}</Label>
+                              <Label className="text-green-500">₱{variant.price}</Label>
+                              <Badge
+                                className={
+                                  variant.stocks > 10
+                                    ? "bg-green-500"
+                                    : variant.stocks > 5
+                                    ? "bg-yellow-500"
+                                    : "bg-red-500"
+                                }
+                              >
+                                {variant.stocks}
+                              </Badge>
+                            </div>
+                          ))}
+                        </div>
+
+                       
+
+
+                        <EditButton product={item} setProduct={setProduct} /> 
 
                       </div>
 
@@ -82,7 +115,7 @@ export default function Page() {
                 {/* Empty State */}
                 {product.length === 0 && (
                   <div className="flex flex-col items-center justify-center h-64 text-gray-500">
-                    <Utensils className="w-16 h-16 mb-4" />
+                    
                     <p className="text-xl font-semibold">No product Found</p>
                     <p className="text-sm">Add items product.</p>
                   </div>
