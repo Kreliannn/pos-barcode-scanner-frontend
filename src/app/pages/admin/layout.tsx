@@ -8,9 +8,9 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 
 export default function ManagerLayout({ children }: { children: React.ReactNode }) {
     
-    //const {user} = useUserStore()
+    const {user} = useUserStore()
 
-    //if(!user || !user?.role.isAdmin) return <UnauthorizedPage />
+    if(!user || user?.role != "admin") return <UnauthorizedPage />
 
     return (
       <div className="flex min-h-screen ">

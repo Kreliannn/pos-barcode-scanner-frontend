@@ -2,7 +2,11 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 type User = {
-  fullname: string;
+  _id : string,
+  name: string;
+  username : string,
+  password : string,
+  role : string,
 } | null;
 
 type UserStore = {

@@ -20,14 +20,19 @@ export default function Home() {
 
   const mutation = useMutation({
     mutationFn: (data: { username: string; password: string }) =>
-      axiosInstance.post("/login", data),
+      axiosInstance.post("/account/login", data),
     onSuccess: (res) => {
-      const { user, token } = res.data;
+      const { account, token } = res.data;
       localStorage.setItem("token", token);
-      setUser(user);
-      router.push(`/pages/cashier/home`);
+      setUser(account);
+      if(account.role == "admin"){
+        router.push(`/pages/admin/dashboard`);
+      } else {
+        router.push(`/pages/cashier/dashboard`);
+      }
     },
-    onError : () => {
+    onError : (e) => {
+      console.log(e)
       errorAlert("user not found")
       setIsLoading(false)
     }
@@ -35,9 +40,8 @@ export default function Home() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    //mutation.mutate({ username, password });
-    //setIsLoading(true)
-    router.push(`/pages/admin/dashboard`);
+    mutation.mutate({ username, password });
+    setIsLoading(true)
   };
 
   return (
