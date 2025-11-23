@@ -1,13 +1,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { accountInterface } from '../types/accounts.type';
 
-type User = {
-  _id : string,
-  name: string;
-  username : string,
-  password : string,
-  role : string,
-} | null;
+type User = accountInterface | null;
 
 type UserStore = {
   user: User;
