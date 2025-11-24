@@ -1,29 +1,31 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback } from "react";
 import BarcodeScannerComponent from "react-qr-barcode-scanner";
 import type { Result } from "@zxing/library";
+import { BarcodeStringFormat } from "react-qr-barcode-scanner";
 
-
-export default function BarcodeScannerTest() {
-  const [data, setData] = useState<string | null>(null);
-
-  const scanBarcodeHanlder = (err: unknown, result?: Result) => {
-    if (result) {
-        console.log("find")
-        const text = result.getText();
-        setData(text);
-        alert(text)
-    }
-  }
+export default function BarcodeScanner() {
+  const scanBarcodeHandler = useCallback(
+    (err: unknown, result?: Result) => {
+      if (result) {
+        const code = result.getText();
+        console.log("SCANNED:", code);
+        alert(code);
+      }
+    },
+    []
+  );
 
   return (
-    <div className="w-full h-[70%]">
+    <div className="w-full h-[70vh] bg-black">
       <BarcodeScannerComponent
-        facingMode="environment" 
         width="100%"
         height="100%"
-        onUpdate={scanBarcodeHanlder}
+        facingMode="environment"
+        videoConstraints={{ width: 1280, height: 720 }}
+        formats={[BarcodeStringFormat.CODE_128]}
+        onUpdate={scanBarcodeHandler}
       />
     </div>
   );
