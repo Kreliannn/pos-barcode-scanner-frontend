@@ -43,7 +43,7 @@ export function SideBarCashier({ className }: AppSidebarProps) {
       <div className="lg:hidden bg-white text-black p-4 flex items-center justify-between fixed top-0 left-0 right-0 z-50 border-b">
         <div className="flex items-center gap-3">
           <div className="aspect-square size-8 overflow-hidden rounded-lg">
-            <img src="/web/logo.jpg" alt="Logo" className="object-cover w-full h-full rounded-lg" />
+            <img  src="/web/logo.jpg" alt="Logo" className="object-cover w-full h-full rounded-lg" />
           </div>
           <div className="flex flex-col">
             <span className="font-semibold text-sm">Cashier</span>
@@ -107,7 +107,7 @@ export function SideBarCashier({ className }: AppSidebarProps) {
               <SidebarMenuButton size="lg" asChild className="hover:bg-gray-100">
                 <a href="/" className="font-semibold">
                   <div className="aspect-square size-8 overflow-hidden rounded-lg">
-                    <img src="/web/logo.jpg" alt="Logo" className="object-cover w-full h-full rounded-lg" />
+                    <img  src="/web/logo.jpg" alt="Logo" className="object-cover w-full h-full rounded-lg" />
                   </div>
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate font-semibold text-black">Cashier</span>
