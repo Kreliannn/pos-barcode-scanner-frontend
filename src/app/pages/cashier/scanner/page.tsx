@@ -27,14 +27,15 @@ export default function Page() {
   return (
     <div className="w-full h-dvh space-y-6 p-4 grid grid-cols-1 md:grid-cols-2  ">
 
-        <div className="w-full h-[650px] bg-red-500 ">
-            <div className="flex">
-                <div className={`p-3 border ${!isTypeScanner ? "bg-green-500 text-white" : "bg-white text-stone-700"}`} onClick={() => setIsTypeScanner(false)}>
-                    <h1> Product List </h1>
+        <div className="w-full h-[300px] md:h-[650px] bg-red-500 ">
+
+            <div className="flex h-[10%]">
+                <div className={`p-3 border flex items-center justify-center ${!isTypeScanner ? "bg-green-500 text-white" : "bg-white text-stone-700"}`} onClick={() => setIsTypeScanner(false)}>
+                    <h1 className="font-bold"> Product List </h1>
                 </div>
 
-                <div className={`p-3 border ${isTypeScanner ? "bg-green-500 text-white" : "bg-white text-stone-700"}`}  onClick={() => setIsTypeScanner(true)}>
-                    <h1> Barcode Scanner</h1>
+                <div className={`p-3 border flex items-center justify-center  ${isTypeScanner ? "bg-green-500 text-white" : "bg-white text-stone-700"}`}  onClick={() => setIsTypeScanner(true)}>
+                    <h1 className="font-bold"> Barcode Scanner</h1>
                 </div>
             </div>
 

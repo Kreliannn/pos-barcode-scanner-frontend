@@ -6,6 +6,7 @@ import useUserStore from "./store/useUserStore";
 import axiosInstance from "./utils/axios";
 import { errorAlert } from "./utils/alert";
 import { LoaderCircle, User, Lock, Eye, EyeOff } from "lucide-react";
+import BarcodeScanner from "./pages/cashier/scanner/components/camera";
 
 export default function Home() {
   const [username, setUsername] = useState("");
@@ -49,11 +50,15 @@ export default function Home() {
       <div className="w-full max-w-3xl grid grid-cols-1 md:grid-cols-2 shadow-lg bg-white rounded-lg overflow-hidden">
         {/* Left: Logo Image */}
         <div className="relative bg-gray-100 p-0 h-full w-full">
-          <img
+          {/*
+ <        img
             src="/web/logo.jpg"
             alt="Logo"
             className="absolute inset-0 w-full h-full object-cover"
           />
+          */}
+        
+            <BarcodeScanner />
         </div>
         {/* Right: Login Form */}
         <div className="flex flex-col justify-center p-10 ">

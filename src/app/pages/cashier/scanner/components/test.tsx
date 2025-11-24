@@ -5,7 +5,7 @@ import BarcodeScannerComponent from "react-qr-barcode-scanner";
 import type { Result } from "@zxing/library";
 
 
-export default function BarcodeScanner() {
+export default function BarcodeScannerTest() {
   const [data, setData] = useState<string | null>(null);
 
   const scanBarcodeHanlder = (err: unknown, result?: Result) => {
