@@ -13,6 +13,7 @@ export interface transactionInterfaceInput {
     vat: number,
     date: string,
     cashier: string,
+    change : number
 }
 
 

@@ -12,11 +12,11 @@ import {
 import { Printer } from "lucide-react"
 import Barcode from "./barcode"
 import { useState } from "react";
-import { printOne, printMany } from "@/app/utils/barcode"
-
+import { printOneQr, printManyQr } from "@/app/utils/barcode"
+import QRCodeComponent from "./qrcode"
  
 
-export function PrintBarcode({ barcode, name, variant , img } : { barcode : string, name : string, variant : string, img : string} ) {
+export function PrintQrCode({ barcode, name, variant , img } : { barcode : string, name : string, variant : string, img : string} ) {
 
   const [open, setOpen] = useState(false);
 
@@ -38,24 +38,23 @@ export function PrintBarcode({ barcode, name, variant , img } : { barcode : stri
 
     
         <div className=" gap-6 mb-6">
-            <div className="flex mb-3 justify-center">
-                <div className="">
+            <div className="w5/6 m-auto grid grid-cols-1 md:grid-cols-2 mb-5">
+                <div className="w-auto h-auto">
                   <img
                     src={img}
                     alt={name}
-                    className="w-[120px] h-[120px] object-cover"
+                    className="w-full h-full object-cover"
                   />
                 </div>
-
-                <Barcode value={barcode} />
+                <QRCodeComponent value={barcode} />
             </div>
 
             <div className="flex gap-3">
-                <Button onClick={() => printOne(barcode, { title: name, imgWidth: 500 })}>
+                <Button onClick={() => printOneQr(barcode, { title: name, imgWidth: 500 })}>
                     One Copy
                 </Button>
 
-                <Button onClick={() => printMany(barcode, 60, { cols: 5, title: name, imgWidth: 180, gapMm: 6 })}>
+                <Button onClick={() => printManyQr(barcode, 70, { cols: 5, imgWidth: 180, gapMm: 6 })}>
                     Many Copy
                 </Button>
             </div>

@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link"
-import {  UserPlus2, BarChart3,  LogOut, Menu, X, MenuIcon, Receipt, Barcode} from "lucide-react"
+import {  UserPlus2, BarChart3,  LogOut, Menu, X, MenuIcon, Receipt, Barcode, QrCode} from "lucide-react"
 import { useState } from "react"
 import {
   Sidebar,
@@ -21,7 +21,7 @@ const navigationItems = [
   { title: "employee", url: "/pages/admin/employee", icon: UserPlus2 },
   { title: "Products", url: "/pages/admin/products", icon: MenuIcon },
   { title: "Transactions", url: "/pages/admin/transactions", icon: Receipt },
-  { title: "Barcode", url: "/pages/admin/barcode", icon: Barcode },
+  { title: "Barcode", url: "/pages/admin/barcode", icon: QrCode },
 ]
 
 const accountItems = [

@@ -9,7 +9,8 @@ import axiosInstance from "@/app/utils/axios";
 import { productInterface } from "@/app/types/product.type";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { PrintBarcode } from "./components/printBarcode";
+import { PrintQrCode } from "./components/printQrCode";
+
 
 
 
@@ -32,7 +33,7 @@ export default function Page() {
       
               {/* Header with Add Button */}
               <div className="w-full h-1/6 bg-white border-b shadow-sm flex items-center justify-between px-6">
-                <h1 className="text-2xl font-bold text-gray-800">Print Barcode</h1>
+                <h1 className="text-2xl font-bold text-gray-800">Print Qrcode</h1>
                 
               </div>
       
@@ -70,12 +71,10 @@ export default function Page() {
                           {item.variants.map((variant, index) => (
                             <div key={index} className="flex justify-between mb-2">
                               <Label className="text-stone-500">{variant.variant}</Label>
-                              <PrintBarcode barcode={variant.barcode} name={item.name} variant={variant.variant} img={item.image}/>
+                              <PrintQrCode barcode={variant.barcode} name={item.name} variant={variant.variant} img={item.image}/>
                             </div>
                           ))}
                         </div>
-
-
 
                       </div>
 
