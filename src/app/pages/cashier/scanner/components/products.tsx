@@ -1,6 +1,7 @@
 "use client";
 
 import { productInterface } from "@/app/types/product.type";
+import { AddCart } from "./addCart";
 
 export default function ProductList({ products }: { products: productInterface[] }) {
   return (
@@ -9,7 +10,7 @@ export default function ProductList({ products }: { products: productInterface[]
         {products.map((p) => (
           <div
             key={p._id}
-            className="bg-white shadow rounded-xl p-3 flex flex-col items-center w-[48%] lg:w-[23%]"
+            className="bg-white shadow rounded-xl p-3 flex flex-col items-center w-[48%] lg:w-[23%] relative hover:scale-110"
           >
             <img
               src={p.image}
@@ -17,6 +18,7 @@ export default function ProductList({ products }: { products: productInterface[]
               className="w-24 h-24 object-cover rounded-md mb-2"
             />
             <p className="text-sm font-medium text-gray-800 text-center">{p.name}</p>
+            <AddCart product={p} />
           </div>
         ))}
       </div>

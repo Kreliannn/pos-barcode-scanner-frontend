@@ -39,7 +39,7 @@ export default function Page() {
                 </div>
             </div>
 
-            {(isTypeScanner) ? (<BarcodeScanner />) : (<ProductList products={products} />)}
+            {(isTypeScanner) ? (<BarcodeScanner products={products} />) : (<ProductList products={products} />)}
         </div>
 
         <div className="w-full h-[250px] md:h-[650px] bg-stone-100">
