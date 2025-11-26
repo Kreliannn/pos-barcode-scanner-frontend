@@ -40,7 +40,25 @@ export function EditButton({ setProduct, product } : { product : productInterfac
     },
   })
 
+  const mutationDelete = useMutation({
+    mutationFn: () =>
+      axiosInstance.delete(`/product/${product._id}`),
+    onSuccess: (response) => {
+      successAlert("product deleted")
+      setProduct(response.data)
+    },
+    onError: (err) => {
+      errorAlert("error")
+    },
+  })
 
+
+  const deleteProductHandler = () => {
+      setOpen(false)
+      confirmAlert("delete this product?", "delete", () => {
+        mutationDelete.mutate()
+      })
+  }
 
 
   const handleSubmit = async () => {
@@ -172,6 +190,8 @@ export function EditButton({ setProduct, product } : { product : productInterfac
               </div>
             ))}
           </div>
+
+          <Button variant={"destructive"} onClick={deleteProductHandler}> delete product </Button>
         </div>
 
         {/* Footer Buttons */}
