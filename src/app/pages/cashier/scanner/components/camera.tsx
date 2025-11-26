@@ -53,11 +53,11 @@ export default function BarcodeScanner({ products  } : { products : productInter
         const qty = result.value ?? 1; // the input value
         const newOrder: transactionOrderInterface = {
           name: product.name,
-          barcode: product.variants[0].barcode,
-          variant: product.variants[0].variant,
-          price: product.variants[0].price,
+          barcode: product.variants[index].barcode,
+          variant: product.variants[index].variant,
+          price: product.variants[index].price,
           qty,
-          total: product.variants[0].price * qty,
+          total: product.variants[index].price * qty,
         };
         addOrder(newOrder);
     

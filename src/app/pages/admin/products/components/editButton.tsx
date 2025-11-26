@@ -19,6 +19,7 @@ import { ImageIcon , X} from "lucide-react"
 import { confirmAlert, errorAlert, successAlert } from "@/app/utils/alert";
 import { productInterface, productInterfaceInput, productVariantInterface } from "@/app/types/product.type"
 import { Label } from "@/components/ui/label"
+import { generateNumericBarcode } from "@/app/utils/customFunction"
 
 export function EditButton({ setProduct, product } : { product : productInterface, setProduct : React.Dispatch<React.SetStateAction<productInterface[]>>}) {
   const [open, setOpen] = useState(false)
@@ -116,7 +117,7 @@ export function EditButton({ setProduct, product } : { product : productInterfac
                 onClick={() =>
                   setProductVariants([
                     ...productVariants,
-                    { variant: "", price: 0, stocks: 0, barcode: "123" },
+                    { variant: "", price: 0, stocks: 0, barcode: generateNumericBarcode() },
                   ])
                 }
               >

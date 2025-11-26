@@ -61,17 +61,17 @@ export default function Page() {
             <div className="mt-4 space-y-1 border-t pt-2">
               <div className="flex justify-between">
                 <span>VAT (12%)</span>
-                <span>₱{transaction?.vat}</span>
+                <span>₱{transaction?.vat.toLocaleString()}</span>
               </div>
       
               <div className="flex justify-between font-bold text-lg">
                 <span>Total</span>
-                <span>₱{transaction?.total}</span>
+                <span>₱{transaction?.total.toLocaleString()}</span>
               </div>
       
               <div className="flex justify-between">
                 <span>Cash</span>
-                <span>₱{transaction?.total + transaction?.change}</span>
+                <span>₱{transaction?.total + transaction?.change.toLocaleString()}</span>
               </div>
       
               <div className="flex justify-between">

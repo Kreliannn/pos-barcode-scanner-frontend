@@ -21,6 +21,8 @@ import { productInterface, productInterfaceInput, productVariantInterface } from
 import { generateNumericBarcode } from "@/app/utils/customFunction"
 import { Label } from "@/components/ui/label"
 
+
+
 export function AddButton({ setProduct } : { setProduct : React.Dispatch<React.SetStateAction<productInterface[]>>}) {
   const [open, setOpen] = useState(false)
   const [file, setFile] = useState<File | null>(null)
@@ -46,6 +48,14 @@ export function AddButton({ setProduct } : { setProduct : React.Dispatch<React.S
       successAlert("product added")
       setProduct(response.data)
       setProductName("")
+      setProductVariants([
+        {
+          variant : "",
+          price : 0,
+          stocks : 0,
+          barcode : generateNumericBarcode(),
+        }
+      ])
       setFile(null)
       setImagePreview(null)
       setOpen(false)
