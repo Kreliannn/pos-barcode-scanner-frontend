@@ -52,6 +52,7 @@ export function AddCart({ product }: { product: productInterface }) {
     setOpen(false)
     successAlert("order added")
     setIndex(0)
+    setQuantity(1)
     setVariant(product.variants[0].variant)
   }
 

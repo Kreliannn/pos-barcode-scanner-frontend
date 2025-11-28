@@ -42,6 +42,7 @@ export default function Page() {
                 <thead>
                   <tr className="border-b">
                     <th className="text-left">Item</th>
+                    <th className="text-left">Variant</th>
                     <th className="text-right">Qty</th>
                     <th className="text-right">Total</th>
                   </tr>
@@ -50,6 +51,7 @@ export default function Page() {
                   {transaction?.orders.map((order, index) => (
                     <tr key={index} className="border-b">
                       <td>{order.name}</td>
+                      <td>{order.variant}</td>
                       <td className="text-right">{order.qty}</td>
                       <td className="text-right">₱{order.total}</td>
                     </tr>

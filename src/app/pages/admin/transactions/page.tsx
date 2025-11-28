@@ -48,8 +48,8 @@ export default function Page() {
   
               <div className="mt-3 border-t pt-2 text-sm text-gray-600">
                 <ul>
-                  {t.orders.map((item) => (
-                   <li className="grid grid-cols-3 gap-2 text-sm">
+                  {t.orders.map((item, index) => (
+                   <li className="grid grid-cols-3 gap-2 text-sm" key={index}>
                     <span className="truncate">{item.name} - {item.variant}</span>
                     <span className="text-center">{item.qty}x</span>
                     <span className="text-right">₱{item.total}</span>
