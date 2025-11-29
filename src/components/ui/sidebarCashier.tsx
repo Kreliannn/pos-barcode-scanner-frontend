@@ -60,7 +60,7 @@ export function SideBarCashier({ className }: AppSidebarProps) {
 
       {/* Mobile Sidebar Drawer */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 z-40 bg-black bg-opacity-20" onClick={closeMobileMenu}>
+        <div className="lg:hidden fixed inset-0 z-40  bg-opacity-20" onClick={closeMobileMenu}>
           <div className="fixed top-0 left-0 w-64 h-full bg-white shadow-lg transform transition-transform duration-300 ease-in-out">
             <div className="pt-20 px-4">
               <div className="mb-6">
