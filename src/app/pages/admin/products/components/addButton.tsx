@@ -215,6 +215,7 @@ export function AddButton({ setProduct } : { setProduct : React.Dispatch<React.S
                   <Input
                     type="number"
                     placeholder="0"
+                    
                     value={variant.stocks}
                     min={0}
                     onChange={(e) => {

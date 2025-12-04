@@ -7,10 +7,14 @@ import { productInterface } from "@/app/types/product.type";
 import BarcodeScanner from "./components/camera";
 import ProductList from "./components/products";
 import Cart from "./components/cart";
+import { LoaderCircle } from "lucide-react";
 
 export default function Page() {
   
   const [products, setProducts] = useState<productInterface[]>([])
+
+  
+  const [isLoading, setIsLoading] = useState(false)
 
   const { data } = useQuery({
       queryKey: ["product"],
@@ -23,6 +27,10 @@ export default function Page() {
 
   
   const [isTypeScanner, setIsTypeScanner] = useState(false)
+
+  if(isLoading){
+    return <div className="w-full h-dvh flex items-center justify-center"><LoaderCircle className="w-10 h-10 animate-spin" /></div>
+  } 
 
 
   return (
@@ -43,7 +51,7 @@ export default function Page() {
         </div>
 
         <div className="w-full h-[250px] md:h-[650px] bg-stone-100">
-            <Cart />
+            <Cart setIsLoading={setIsLoading} />
         </div>
 
     </div>

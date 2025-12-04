@@ -11,7 +11,7 @@ import axiosInstance from "@/app/utils/axios";
 import { successAlert, errorAlert } from "@/app/utils/alert";
 import useUserStore from "@/app/store/useUserStore";
 
-export default function Cart() {
+export default function Cart({setIsLoading} : {setIsLoading : React.Dispatch<React.SetStateAction<boolean>>}) {
   const { cart, clearOrder, removeOrder } = useCartStore();
   const { user  } = useUserStore()
 
@@ -27,6 +27,7 @@ export default function Cart() {
     mutationFn: (data: transactionInterfaceInput) =>
       axiosInstance.post("/transaction", data),
     onSuccess: (response) => {
+
       router.push(`/pages/cashier/receipt/${response.data._id}`);
       clearOrder()
     },
@@ -82,6 +83,8 @@ export default function Cart() {
           }
           
           mutation.mutate(newTransaction)
+
+          setIsLoading(true)
         })
       }
     });
