@@ -34,6 +34,7 @@ export default function Page() {
               <h1 className="font-bold text-lg">Store Receipt</h1>
               <p>Receipt ID: {transaction?._id}</p>
               <p>Date: {transaction?.date}</p>
+              <p>Time: { new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })          }</p>
               <p>Cashier: {transaction?.cashier}</p>
             </div>
       
@@ -73,12 +74,12 @@ export default function Page() {
       
               <div className="flex justify-between">
                 <span>Cash</span>
-                <span>₱{transaction?.total + transaction?.change.toLocaleString()}</span>
+                <span>₱{(transaction?.total + transaction?.change).toLocaleString()}</span>
               </div>
       
               <div className="flex justify-between">
                 <span>Change</span>
-                <span>₱{transaction?.change}</span>
+                <span>₱{transaction?.change.toLocaleString()}</span>
               </div>
             </div>
       

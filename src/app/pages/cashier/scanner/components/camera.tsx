@@ -12,9 +12,23 @@ import Swal from "sweetalert2";
 
 export default function BarcodeScanner({ products  } : { products : productInterface[] }) {
 
-  const { addOrder } = useCartStore()
+  const { addOrder , cart} = useCartStore()
 
   const addCartModal = (product : productInterface, index : number) => {
+
+    let trueStock = product.variants[index].stocks
+
+    console.log("stock",trueStock)
+
+    cart.forEach(cartItem => {
+        if(cartItem.barcode.toString() ===  product.variants[index].barcode.toString()){
+          
+          trueStock -= cartItem.qty
+        }
+    })
+
+    console.log("stock2",trueStock)
+
     Swal.fire({
       title: "Add to Cart?",
       html: `
@@ -24,14 +38,16 @@ export default function BarcodeScanner({ products  } : { products : productInter
           <div style="display: flex; align-items: center; gap: 8px;">
              <span> ${product.variants[index].variant}</span>
              <span> ₱${product.variants[index].price}</span>
+             <span> stocks: ${trueStock}</span>
           </div>
          
            <input 
               type="number" 
               id="quantity" 
               class="swal2-input" 
-              value="1" 
-              min="1" 
+              value="${trueStock < 1 ? '0' : '1'}" 
+              min="${trueStock < 1 ? '0' : '1'}" 
+              max="${trueStock}"
               style="width: 150px; text-align: center;"
             />
         </div>
@@ -41,11 +57,24 @@ export default function BarcodeScanner({ products  } : { products : productInter
       cancelButtonText: "Cancel",
       focusConfirm: false,
       preConfirm: () => {
+        
+        if(trueStock < 1){
+          Swal.showValidationMessage('no Stock');
+          return;
+        }
+
         const quantityInput = Swal.getPopup()?.querySelector<HTMLInputElement>('#quantity');
+
         if (!quantityInput || Number(quantityInput.value) < 1) {
           Swal.showValidationMessage('Quantity must be at least 1');
           return;
         }
+
+        if (!quantityInput || Number(quantityInput.value) > trueStock) {
+          Swal.showValidationMessage('the current stock is ' + trueStock);
+          return;
+        }
+        
         return Number(quantityInput.value);
       }
     }).then((result) => {

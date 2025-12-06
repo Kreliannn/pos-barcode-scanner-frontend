@@ -22,11 +22,13 @@ import { successAlert } from "@/app/utils/alert";
 
 export function AddCart({ product }: { product: productInterface }) {
   const [open, setOpen] = useState(false);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
   const [variant, setVariant] = useState(product.variants[0].variant);
   const [index, setIndex] = useState(0);
 
-  const {addOrder} = useCartStore()
+  const [stock, setStock] = useState(product.variants[0].stocks);
+
+  const {addOrder, cart} = useCartStore()
 
 
   useEffect(() => {
@@ -34,6 +36,17 @@ export function AddCart({ product }: { product: productInterface }) {
       if(item.variant == variant){
         setIndex(index)
         setVariant(variant)
+
+        let trueStock = item.stocks
+
+        cart.forEach(cartItem => {
+            if(cartItem.barcode == item.barcode){
+              trueStock -= cartItem.qty
+            }
+        })
+
+        setStock(trueStock)
+        setQuantity(trueStock > 0 ? 1 : 0)
       }
     })
   }, [variant])
@@ -54,6 +67,7 @@ export function AddCart({ product }: { product: productInterface }) {
     setIndex(0)
     setQuantity(1)
     setVariant(product.variants[0].variant)
+    setStock(product.variants[0].stocks)
   }
 
   const incrementQuantity = () => {
@@ -100,10 +114,16 @@ export function AddCart({ product }: { product: productInterface }) {
             <div className="space-y-4">
 
               {/* Name */}
-              <div className="flex gap-10">
-                <h2 className="text-xl font-semibold">{product.name}</h2> 
-                <p className="text-xl font-medium text-green-600">₱{product.variants[index].price}</p>
+              <div className="">
+                <h2 className="text-xl font-semibold text-center">{product.name}</h2> 
               </div>
+
+              <div className="flex justify-between ">
+                <p className="text-sm font-medium text-green-600">Price: ₱{product.variants[index].price}</p>
+                <p className="text-sm font-medium text-grey-600">stocks: {stock}</p>
+              </div>
+
+             
 
               <div className=""> 
        
@@ -143,6 +163,7 @@ export function AddCart({ product }: { product: productInterface }) {
                     value={quantity}
                     onChange={handleQuantityChange}
                     min={1}
+                    readOnly
                     className="w-4/6 text-center"
                   />
                   <Button
@@ -150,6 +171,8 @@ export function AddCart({ product }: { product: productInterface }) {
                     size="sm"
                     onClick={incrementQuantity}
                     className="w-1/6 h-8 p-0 bg-green-500 text-white hover:bg-green-600 hover:text-white"
+                    disabled={stock <= 0 || quantity >= stock}
+                    
                   >
                     <Plus />
                   </Button>
