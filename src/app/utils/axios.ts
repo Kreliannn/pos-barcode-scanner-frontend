@@ -6,7 +6,7 @@ const live = "https://barracks-test-code.onrender.com"
 const cp = " http://192.168.1.6:5000"
 
 const axiosInstance = axios.create({
-  baseURL: cp,  
+  baseURL: localhost,  
 });
 
 axiosInstance.interceptors.request.use((config) => {
