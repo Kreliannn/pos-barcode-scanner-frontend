@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/sidebar"
 
 const navigationItems = [
-  { title: "Dashboard", url: "/pages/cashier/dashboard", icon: Home },
   { title: "Products", url: "/pages/cashier/products", icon: MenuIcon },
   { title: "Scanner", url: "/pages/cashier/scanner", icon: ScanLineIcon },
   { title: "Transactions", url: "/pages/cashier/transactions", icon: Receipt },

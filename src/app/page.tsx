@@ -29,7 +29,7 @@ export default function Home() {
       if(account.role == "admin"){
         router.push(`/pages/admin/dashboard`);
       } else {
-        router.push(`/pages/cashier/dashboard`);
+        router.push(`/pages/cashier/products`);
       }
     },
     onError : (e) => {

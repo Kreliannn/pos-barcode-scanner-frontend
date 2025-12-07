@@ -76,7 +76,7 @@ export default function Cart() {
             orders: cart,
             total: grandTotal,
             vat: grandTotal* 0.12, 
-            date: new Date().toISOString().split("T")[0],
+            date:  new Date().toISOString().split("T")[0],
             cashier: user?.name,
             change : payment - grandTotal
           }
